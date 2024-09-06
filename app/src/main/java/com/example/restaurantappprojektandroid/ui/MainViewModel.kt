@@ -52,12 +52,12 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
 
     private fun addSnapshotListenerForCurrentUser() {
         userRef = db.collection("users").document(auth.currentUser!!.uid)
+
         userRef.addSnapshotListener { value, error ->
-            Log.i("DEBUG", "addSnapshotListenerForCurrentUser\nvalue: $value")
             if (error == null && value != null && value.exists()) {
+
                 val user = value.toObject(User::class.java)
                 if (user != null) {
-                    Log.i("DEBUG", "addSnapshotListenerForCurrentUser\nuser: $value")
                     _likedMeals.value = user.likedGerichte
                     Log.i("DEBUG", "addSnapshotListenerForCurrentUser\nlikedMeals: ${_likedMeals.value}")
                 }
